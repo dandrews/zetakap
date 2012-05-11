@@ -1,0 +1,18 @@
+Dependencies and install commands:
+    easy_install pytidylib
+    easy_install beautifulsoup
+    easy_install gdata
+    apt-get install tidy    
+    apt-get install python-simplejson
+    apt-get install gcc
+    https://github.com/simplegeo/python-oauth2
+        python setup.py build
+        python setup.py install	
+    http://pypi.python.org/pypi/simplejson
+    http://code.google.com/p/httplib2/
+    http://code.google.com/p/python-twitter/
+        python setup.py build
+	python setup.py install
+    
+
+    
