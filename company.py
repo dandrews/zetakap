@@ -59,7 +59,14 @@ class Company:
             self.cap = cap_html
             return
         cap = cap_html.split('<b>')[1]
-        self.cap = re.sub(r'<[^>]*?>', '', cap).strip()
+        cap = re.sub(r'<[^>]*?>', '', cap).strip()
+        # flag nano/micro cap companies
+        if 'M' in cap:
+            temp_cap = cap.replace('M','')
+            if long(float(temp_cap)) < 100:
+                self.cap = '0'
+                return
+        self.cap = cap
 
     def set_short(self):
         begin = 'body=[Short interest share]'

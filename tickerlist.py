@@ -14,7 +14,7 @@ class TickerList:
         pretty_html = get_pretty_html( url )
         self.tickers = []
         counter = 0
-        max_len = 5 # random.randrange(7, 11) 
+        max_len = 8 # random.randrange(7, 11) 
         while find_between( pretty_html, '<a href="quote.ashx?t=', '&amp;' ):
             if counter > max_len:
                 break

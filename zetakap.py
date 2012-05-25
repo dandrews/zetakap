@@ -7,7 +7,7 @@ import glob
 num_articles = len(glob.glob("Articles/Article_*.txt"))
 articles = []
 
-while len( articles ) < 5:
+while len( articles ) < 10:
     
     article = Article( make_screen() )
     article.make_article()

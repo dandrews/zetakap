@@ -292,6 +292,8 @@ class Article:
         for ticker in self.tickerlist.tickers[:self.num_companies]:                
             company = Company( ticker, self.screen )
             company.populate()
+            if company.cap == '0':
+                continue
             self.profiles.append( company.profile )
 
     def print_profiles(self):

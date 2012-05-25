@@ -21,7 +21,6 @@ def make_tweet(title,url,tickers):
               'Just published:',
               'Just posted:',
               'Another good post:',
-              'Another Goody:',
               'Newest:',
               'Latest:',
               'Brand new post:',

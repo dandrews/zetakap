@@ -564,7 +564,7 @@ def make_major_screen():
     # price_screens = ['U5','U7','U10']
     debt_screens = ['DER','LDER']
     analyst_screens = ['AB','ABB','ASB']
-    screens = [ sample( low_value_screens, 2 ), liquidity_screens, sample( profit_screens, 2 ), debt_screens, [choice( growth_screens )], [choice( analyst_screens )] ]
+    screens = [ sample( low_value_screens, 2 ), liquidity_screens, sample( profit_screens, 2 ), [choice( growth_screens )], [choice( analyst_screens )] ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])
     # pad the list
