@@ -39,11 +39,24 @@ def make_tweet(title,url,tickers):
               'Hot of the press:',
               'Our latest post:',                    
               'Newest post:']
-    tweet = ''
-    while len(tweet) == 0 or len(tweet) > 140:
-        tweet = choice(intros) + ' ' + title + ' ' + url + tickers
+
+    tickers = ' '.join( tickers )
+    tweet = title + ' ' + url + ' ' + tickers
+    if len(tweet) > 140:
+        tweet = url + ' ' + tickers
+        new_title = ''
+        for word in title.split():
+            if len( new_title + ' ' + word + '... ' + tweet) < 140 :
+                new_title = new_title + ' ' + word
+            else:
+                new_title = new_title + '... '
+                break
+        tweet = new_title + ' ' + tweet
+    intro = choice(intros)
+    if len(intro + ' ' + tweet) <= 140:
+        tweet = intro + ' ' + tweet
     if len(tweet) + len('$$ ') < 140:
-        tweet = '$$ ' + tweet
+        tweet = '$$' + tweet
     assert( len(tweet) > 0 and len(tweet) <= 140 )
     return tweet
 
@@ -82,9 +95,9 @@ for item in sa_root.findall('channel/item'):
     sa_asctime = asctime(gmtime(sa_mktime))
     # print "\t SA mktime: {0} - {1}".format(sa_mktime, sa_asctime)
 
-    tickers = ''
+    tickers = []
     for symbol in item.findall('category')[:-1]:
-        tickers = tickers + ' $' + symbol.text
+        tickers.append( '$' + symbol.text )
 
     if sa_mktime > last_post_mktime:
         title = item.find('title').text        
