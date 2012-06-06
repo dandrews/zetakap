@@ -9,7 +9,12 @@ sa_xml = urllib2.urlopen( sa_url ).read()
 sa_root = ET.fromstring( sa_xml )
 
 friends = twitter_post.client.GetFriends()
-followers = ['ZetaKap','jazzmantic','SeekingAlpha','biztradenews']
+followers = ['ZetaKap',
+             'jazzmantic',
+             'SeekingAlpha',
+             'biztradenews',
+             'WallStJesus',
+             'AlenKarabegovic']
 for friend in friends:
     followers.append( friend.screen_name )
 
