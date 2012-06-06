@@ -420,7 +420,7 @@ maps = {'AB':   'an_recom_buy',
         'CR':   'fa_curratio_o2',
         'QR':   'fa_quickratio_o2',
         'CS':   'ind_diversifiedcomputersystems',
-        'D':    'fa_div_o3,fa_payoutratio_high',
+        'D':    'fa_div_o3,fa_payoutratio_u100',
         'DH':   'fa_div_high',
         'DVH':  'fa_div_veryhigh',        
         'DMM':  'ind_drugmanufacturersmajor',
@@ -528,13 +528,13 @@ screens = [['','NM', 'DER',''],
 def make_finviz_url( screen ):
     prefix = 'http://finviz.com/screener.ashx?v=111&f='
     suffix = '&ft=4'
-    geo = ',geo_usa'
+    # geo = ',geo_usa'
     # idx = ',idx_sp500'
     screen_url = []
     for screen_type in screen:
         if screen_type != '':
             screen_url.append( maps[screen_type] )
-    url = prefix + ','.join(screen_url) + geo + suffix # + idx
+    url = prefix + ','.join(screen_url) + suffix # + idx + geo 
     return url
 
 def make_minor_screen():
@@ -552,7 +552,9 @@ def make_minor_screen():
     
     minor_screen = ['','','']
     while minor_screen == ['','','']:
-        minor_screen = [ choice(cap_screens + ['','']), choice( sector_screens + ['','','','']), choice( ['D','DH','DVH',''] ) ]
+        minor_screen = [ choice(cap_screens + ['','']),
+                         choice( sector_screens + ['','','']),
+                         choice( ['D','DH','DVH',''] ) ]
     return minor_screen
 
 def make_major_screen():
@@ -564,7 +566,11 @@ def make_major_screen():
     # price_screens = ['U5','U7','U10']
     debt_screens = ['DER','LDER']
     analyst_screens = ['AB','ABB','ASB']
-    screens = [ sample( low_value_screens, 2 ), liquidity_screens, sample( profit_screens, 2 ), [choice( growth_screens )], [choice( analyst_screens )] ]
+    screens = [ sample( low_value_screens, 2 ),
+                liquidity_screens,
+                sample( profit_screens, 2 ),
+                [choice( growth_screens )],
+                [choice( analyst_screens )] ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])
     # pad the list
