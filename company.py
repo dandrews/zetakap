@@ -119,7 +119,10 @@ class Company:
                 continue
             else:
                 desc.append( name + " of " + value )
-        self.screen_desc = screen_desc + " and ".join( desc ) + "."
+        screen_desc = screen_desc + ", a ".join( desc ) + "."
+        pos = screen_desc.rfind( ", a " )
+        screen_desc = screen_desc[:pos] + screen_desc[pos:].replace( ', a ', ', and a ', 1 )
+        self.screen_desc = screen_desc
 
     def set_beta(self):
         begin = 'body=[Beta]'
