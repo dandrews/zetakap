@@ -556,7 +556,7 @@ def make_minor_screen():
     return minor_screen
 
 def make_major_screen():
-    # trend_screens = ['BE', 'BU', 'GC','52WH', '52WL']    
+    trend_screens = ['52WH', '52WL'] # 'BE', 'BU', 'GC',   
     low_value_screens = ['LFPE','PER','PEG','PBVR','PCFR','PSR']
     liquidity_screens = ['CR','QR']
     profit_screens = ['EPSG','NM','OPM','ROA','ROE']
@@ -564,7 +564,8 @@ def make_major_screen():
     # price_screens = ['U5','U7','U10']
     debt_screens = ['DER','LDER']
     analyst_screens = ['AB','ABB','ASB']
-    screens = [ sample( low_value_screens, 2 ),
+    screens = [ [choice( trend_screens )],
+                sample( low_value_screens, 2 ),
                 liquidity_screens,
                 sample( profit_screens, 2 ),
                 [choice( growth_screens )],

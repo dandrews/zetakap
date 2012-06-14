@@ -14,7 +14,7 @@ from tickerlist import top_tickers
 from company import Company
 from descriptions import descriptions as descs
 
-# trend_screens = set(['BE', 'BU', '52WH', '52WL'])
+trend_screens = set(['52WH', '52WL']) #'BE', 'BU', 
 type_screens = set(['D'])
 cap_screens = set(['SC', 'MC', 'LC', 'MG' ])
 liquidity_screens = set(['CR','QR'])
@@ -115,6 +115,7 @@ class Article:
         low_value = 0
         profit = 0
         liquidity = 0
+        trend = 0
         for screen in self.screen:
             if screen == '':
                 continue
@@ -135,6 +136,12 @@ class Article:
                 if profit == 0:
                     key = 'profit'
                     profit = 1                    
+                else:
+                    continue
+            elif screen in trend_screens:
+                if trend == 0:
+                    key = 'trend'
+                    trend = 1                    
                 else:
                     continue
             if screen in liquidity_screens:
