@@ -403,7 +403,6 @@ abbrevs = {'AB':   "Analysts' Rating",
            'ROA':  'Return on Assets',
            'ROE':  'Return on Equity',
            'SC':   'Small Cap',
-           'S':    'Services',
            'T':    'Technology', 
            'U':    'Utility',
            'U5':   'Share Price', #'Under $5',
@@ -421,8 +420,8 @@ maps = {'AB':   'an_recom_buy',
         'QR':   'fa_quickratio_o2',
         'CS':   'ind_diversifiedcomputersystems',
         'D':    'fa_div_o3,fa_payoutratio_u100',
-        'DH':   'fa_div_high',
-        'DVH':  'fa_div_veryhigh',        
+        'DH':   'fa_div_high,fa_payoutratio_u100',
+        'DVH':  'fa_div_veryhigh,fa_payoutratio_u100',        
         'DMM':  'ind_drugmanufacturersmajor',
         '52WH': 'ta_highlow52w_b80',
         '52WL': 'ta_highlow52w_a0to10h',        
@@ -457,7 +456,6 @@ maps = {'AB':   'an_recom_buy',
         'ROA':  'fa_roa_o10',
         'ROE':  'fa_roe_verypos',
         'SC':   'cap_small',
-        'S':    'sec_services',
         'T':    'sec_technology',
         'U':    'sec_utilities',
         'U5':   'sh_price_u5',
@@ -503,7 +501,7 @@ html_maps = {'AB': "Analysts' mean recommendation (1=Buy 5=Sell)",
 
 ignored = ['BI','BE','BM','BU','CG','CS',
            'DMM','F','H','I','IIP','IOG','IMM','LC','MOG','MC','MG',  #'ETF',
-           'OGD','REIT','SC','S','T','U'] # ,'U5','U7','U10']
+           'OGD','REIT','SC','T','U'] # ,'U5','U7','U10']
 
 screens = [['','NM', 'DER',''],
            ['','ROA','',''],
@@ -542,12 +540,12 @@ def make_minor_screen():
     sector_screens = ['BI','BM','CG','CS',
                       'DMM','F','H','I',
                       'IIP','IMM','IOG','MOG',
-                      'OGD','REIT','S','T',
+                      'OGD','REIT','T',
                       'U' ]
     
     minor_filters = ['BI','BM','CG','CS',
                      'DMM','F','H','I','IIP','IOG','IMM','LC', #'ETF','D',
-                     'MOG','MC','MG','OGD','REIT','SC','S',
+                     'MOG','MC','MG','OGD','REIT','SC',
                      'T','U','U5','U7','U10']
     
     minor_screen = ['','','']
