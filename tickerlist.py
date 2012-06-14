@@ -14,10 +14,10 @@ class TickerList:
         pretty_html = get_pretty_html( url )
         self.tickers = []
         counter = 0
-        max_len = 8 # random.randrange(7, 11) 
+        max_len = random.randrange(7, 15) 
         while find_between( pretty_html, '<a href="quote.ashx?t=', '&amp;' ):
             if counter > max_len:
-                break
+                break        
             ticker = find_between( pretty_html, '<a href="quote.ashx?t=', '&amp;' )    
             self.tickers.append(ticker)
             pretty_html = pretty_html.replace('<a href="quote.ashx?t=','',1)
@@ -27,7 +27,6 @@ class TickerList:
         print "Num of Stocks: " + str(len(self.tickers))
         for symbol in self.tickers:
             print symbol
-
 
 top_tickers = ['AAPL',
                'C',
