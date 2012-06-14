@@ -21,7 +21,7 @@ liquidity_screens = set(['CR','QR'])
 yield_screens = set(['DH','DVH'])
 sector_screens = set(['BI','BM','CG','CS','DMM','F',
                       'H','I','IIP','IMM',
-                      'IOG','MOG','OGD','REIT','S',
+                      'IOG','MOG','OGD','REIT',
                       'T','U']) 
 low_value_screens = set(['LFPE','PER','PEG','PBVR','PCFR','PSR'])
 debt_screens = set(['DER'])
@@ -49,7 +49,6 @@ class Article:
         self.screen = screen
         self.tickerlist = TickerList( screen )
         tickers = set( self.tickerlist.tickers )
-        # get at most 6 companies, to keep articles short
         # get at least 3 companies        
         num_companies = len( self.tickerlist.tickers )
         if num_companies < 3:
@@ -287,14 +286,17 @@ class Article:
         self.summary = summary
         
     def make_profiles(self):
+        num_companies_removed = 0
         self.profiles = []
         shuffle(self.tickerlist.tickers)
         for ticker in self.tickerlist.tickers[:self.num_companies]:                
             company = Company( ticker, self.screen )
             company.populate()
             if company.cap == '0':
+                num_companies_removed = num_companies_removed + 1
                 continue
             self.profiles.append( company.profile )
+        self.num_companies = self.num_companies - num_companies_removed
 
     def print_profiles(self):
         profiles = ''
@@ -313,13 +315,14 @@ class Article:
                                    "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Google Finance and Yahoo Finance.\n"])
 
     def make_article(self):
-        self.make_title()
         self.make_intro()
         self.make_descs()
         self.make_summary(self.screen)
         self.make_conclusion()
         self.make_profiles()
         self.make_disclaimer()
+        # make title last so that num_companies is updated
+        self.make_title()
         
     def print_article(self):
         article_text = ''
