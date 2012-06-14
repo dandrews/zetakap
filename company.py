@@ -11,13 +11,10 @@ from utils import find_between
 class Company:
     def __init__(self, ticker, screen):
         self.ticker = ticker
-        #print "ticker"
-        #print ticker
         self.screen = screen
         self.screen_pairs = []
         self.screen_desc = ''
         profile_url = "http://finviz.com/quote.ashx?t=" + ticker
-        #print profile_url
         self.html = get_pretty_html( profile_url )
 
     def set_name(self):
@@ -60,7 +57,6 @@ class Company:
             return
         cap = cap_html.split('<b>')[1]
         cap = re.sub(r'<[^>]*?>', '', cap).strip()
-        # flag nano/micro cap companies
         if 'M' in cap:
             temp_cap = cap.replace('M','')
             if long(float(temp_cap)) < 100:
@@ -110,7 +106,11 @@ class Company:
             value = str(screen_pair[1])            
             if name in set(['Dividend', 'High Yield Dividend', 'Very High Yield Dividend']):
                 name = 'Dividend Yield'
-                
+            if name == 'Payout Ratio':
+                if value == '-':
+                    continue
+                if value == '0.00%':
+                    continue
             if name == '52 Week High':
                 desc.append( "trading below it's " + name + " by " + value )                
                 continue
