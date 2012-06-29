@@ -12,7 +12,9 @@ Dependencies and install commands:
     http://code.google.com/p/httplib2/
     http://code.google.com/p/python-twitter/
         python setup.py build
-	python setup.py install
+        python setup.py install
+    http://code.google.com/p/parsedatetime/
+        python setup.py install
     
 
     
