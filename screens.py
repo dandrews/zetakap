@@ -499,6 +499,39 @@ html_maps = {'AB': "Analysts' mean recommendation (1=Buy 5=Sell)",
              'U10': 'Current stock price',
             }
 
+order_suffixes = {'AB': '-recom',
+                  'ABB': '-recom',
+                  'ASB': '-recom',
+                  'CR': '-curratio',
+                  'D': '-dividendyield',
+                  'DER': '-debteq',
+                  'DH': '-dividendyield',
+                  'DVH': '-dividendyield',
+                  'LDER': '-ltdebteq',
+                  '52WH': '-high52w',
+                  '52WL': '-low52w',
+                  'EPSG': '-epsyoy',
+                  'EPSG1': '-epsyoy1',
+                  'EPSG5': '-estltgrowth',
+                  'PER': '-pe',
+                  'PO': '-payoutratio',
+                  'FPER': '-forwardpe',
+                  'LFPE': '-forwardpe',
+                  'LC': '-marketcap',
+                  'MC': '-marketcap',
+                  'MG': '-marketcap',
+                  'SC ': '-marketcap',                  
+                  'NM': '-netmargin',
+                  'OPM': '-opermargin',
+                  'PEG': '-peg',
+                  'PBVR': '-pb',
+                  'PCFR': '-pfcf',
+                  'PSR': '-ps',
+                  'QR': '-quickratio',
+                  'ROA': '-roa',                  
+                  'ROE': '-roe'
+                  }
+
 ignored = ['BI','BE','BM','BU','CG','CS',
            'DMM','F','H','I','IIP','IOG','IMM','LC','MOG','MC','MG',  #'ETF',
            'OGD','REIT','SC','T','U'] # ,'U5','U7','U10']
@@ -526,13 +559,15 @@ screens = [['','NM', 'DER',''],
 def make_finviz_url( screen ):
     prefix = 'http://finviz.com/screener.ashx?v=111&f='
     suffix = '&ft=4'
+    order_suffix = '&o='
     # geo = ',geo_usa'
     # idx = ',idx_sp500'
     screen_url = []
     for screen_type in screen:
         if screen_type != '':
             screen_url.append( maps[screen_type] )
-    url = prefix + ','.join(screen_url) + suffix # + idx + geo 
+    url = prefix + ','.join(screen_url) + suffix + order_suffix + order_suffixes[screen[3]] # + idx + geo
+    print url
     return url
 
 def make_minor_screen():
@@ -550,25 +585,26 @@ def make_minor_screen():
     
     minor_screen = ['','','']
     while minor_screen == ['','','']:
-        minor_screen = [ choice(cap_screens + ['','']),
-                         choice( sector_screens + ['','','']),
-                         choice( ['D','DH','DVH',''] ) ]
+        minor_screen = [ choice( cap_screens + ['','','']),
+                         choice( sector_screens + ['','','',''] ),
+                         choice( ['D','D','D','DH','DH','DVH','','',''] ) ]
     return minor_screen
 
 def make_major_screen():
-    trend_screens = ['52WH', '52WL'] # 'BE', 'BU', 'GC',   
+    #trend_screens = ['52WH', '52WL'] # 'BE', 'BU', 'GC',   
     low_value_screens = ['LFPE','PER','PEG','PBVR','PCFR','PSR']
     liquidity_screens = ['CR','QR']
     profit_screens = ['EPSG','NM','OPM','ROA','ROE']
     growth_screens = ['EPSG1','EPSG5']
     # price_screens = ['U5','U7','U10']
     debt_screens = ['DER','LDER']
-    analyst_screens = ['AB','ABB','ASB']
-    screens = [ [choice( trend_screens )],
+    analyst_screens = ['AB','ABB','ASB','ASB']
+    screens = [ #[choice( trend_screens )],
                 sample( low_value_screens, 2 ),
                 liquidity_screens,
                 sample( profit_screens, 2 ),
                 [choice( growth_screens )],
+                #[choice( debt_screens )],                
                 [choice( analyst_screens )] ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])
