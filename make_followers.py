@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import twitter_post
+import update_email
+import smtplib
 import xml.etree.ElementTree as ET
 import urllib2
 
@@ -28,12 +30,24 @@ for item in sa_root.findall('channel/item'):
             print screen_name
             print twitter_post.client.CreateFriendship(screen_name)
 
-# make sure to follow people who follow you            
+# make sure to follow people who follow you
+following = []            
 current_followers = twitter_post.client.GetFollowers()
 for follow in current_followers:
     screen_name = follow.screen_name
     if screen_name not in followers:
         twitter_post.client.CreateFriendship(screen_name)
-        
+        following.append( screen_name )
+
+msg = "New following:\n"
+for name in following:
+    msg = msg + name + "\n"
+    
+# Send an update email
+server = smtplib.SMTP('smtp.gmail.com:587')  
+server.starttls()  
+server.login( update_email.USERNAME, update_email.PASSWORD )  
+server.sendmail(update_email.fromaddr, update_email.toaddrs, msg)  
+server.quit()
 
         
