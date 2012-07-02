@@ -1,6 +1,88 @@
+#!/usr/bin/env python
 # coding: utf-8
 from random import choice
 from random import sample
+
+# minor screens
+dividend_screens = ['D','D','D','DH','DH','DVH']
+cap_screens = ['SC', 'MC', 'LC', 'MG' ]
+sector_screens = ['BI','BM','CG','CS',
+                  'DMM','F','H','I',
+                  'IIP','IMM','IOG','MOG',
+                  'OGD','REIT','T',
+                  'U' ]
+
+minor_screens = sum( [ dividend_screens,
+                       cap_screens,
+                       sector_screens ], [] )
+
+# major screens
+trend_screens = ['52WH', '52WL'] # 'BE', 'BU', 'GC',   
+low_value_screens = ['LFPE','PER','PEG','PBVR','PCFR','PSR']
+liquidity_screens = ['CR','QR']
+profit_screens = ['EPSG','NM','OPM','ROA','ROE']
+growth_screens = ['EPSG1','EPSG5']
+price_screens = ['U5','U7','U10']
+debt_screens = ['DER','LDER']
+analyst_screens = ['AB','ABB','ASB','ASB']
+
+major_screens = sum( [ trend_screens,
+                       low_value_screens,
+                       liquidity_screens,
+                       profit_screens,
+                       growth_screens,
+                       price_screens,
+                       debt_screens,
+                       analyst_screens ], [] )
+
+keywords = {'AB': ['Analysts','Buy'],
+            'ABB': ['Analysts', 'Buy Or Better'],
+            'ASB': ['Analysts', 'Strong Buy'],          
+            'BE': ['Losing', 'Slip', 'Bear', 'Fall'],
+            'BI': ['Bio'],
+            'BM': ['Basic Materials'],
+            'BU': ['Gain', 'Bullish'],
+            'CG': ['Consumer Goods'],
+            'CR': ['Cash','Money','Liquid'],
+            'CS': ['Computer'],            
+            'D': ['Dividend','Yield'],
+            'DH': ['Dividend','High Yield'],
+            'DMM': ['Pharma'],
+            'DVH': ['Dividend','High Yield'],
+            'QR': ['Cash','Money','Liquid'],
+            'EPSG': ['Grow','Profit'],
+            'EPSG1': ['Grow','Project','Expect'],
+            'EPSG5': ['Grow','Project','Expect'],
+            'F': ['Financ'],
+            'FPER': ['Over','Premium','High'],
+            'H': ['Health'],
+            'I': ['Industrial'],
+            'IIP': ['Internet'],
+            'IMM': ['Industrial Metals & Minerals'],
+            'IOG': ['Oil & Gas'],
+            'LC': ['Large'],
+            'LFPE': ['Discount','Low Value'],
+            'MC': ['Mid'],
+            'MG': ['Mega'],            
+            'MOG': ['Major Oil & Gas'],
+            'NM': ['Profit','Margin'],
+            'OGD': ['Oil & Gas Drill'],
+            'OPM': ['Profit'],
+            'PEG': ['Under','Cheap','Discount','Below'],
+            'PER': ['Under','Cheap','Discount','Below'],
+            'PBVR': ['Under','Cheap','Discount','Below'],
+            'PCFR': ['Under','Cheap','Discount','Below'],
+            'PSR': ['Discount','Cheap'],
+            'REIT': ['REIT','Real Estate'],
+            'ROA': ['Profit','Margin'],
+            'ROE': ['Profit','Margin'],
+            'SC': ['Small'],
+            'T': ['Tech'],
+            'U': ['Util'],
+            'U5': ['$5'],
+            'U7': ['$7'],
+            'U10': ['$10'],
+            }
 
 titles = {'AB': ['That Analysts Rate As Buy'],
           'ABB': ['That Analysts Rate As Buy Or Better'],
@@ -383,9 +465,9 @@ abbrevs = {'AB':   "Analysts' Rating",
            'LFPE': 'Forward Price/Earnings Ratio',           
            'H':    'Healthcare',
            'I':    'Industrial',
-           'IOG':  'Oil & Gas',
            'IIP':  'Internet',
            'IMM':  'Industrial Metals & Minerals',
+           'IOG':  'Oil & Gas',
            'MOG':  'Major Oil & Gas',           
            'OGD':  'Oil & Gas Drilling',           
            'LC':   'Large Cap',
@@ -536,25 +618,12 @@ ignored = ['BI','BE','BM','BU','CG','CS',
            'DMM','F','H','I','IIP','IOG','IMM','LC','MOG','MC','MG',  #'ETF',
            'OGD','REIT','SC','T','U'] # ,'U5','U7','U10']
 
-screens = [['','NM', 'DER',''],
-           ['','ROA','',''],
-           ['PER','ROA'],
-           ['PER'],
-           ['CR', 'SC'],
-           ['CR', 'LC'],           
-           ['CR', 'NM'],
-           ['PSR', 'EPSG'],
-           ['OPM'],
-           ['OPM', 'SC'],           
-           ['EPSG', 'D'],
-           ['EPSG', 'PBVR', 'H'],
-           ['EPSG', 'ROE', 'D'],
-           ['EPSG', 'PER'],
-           ['EPSG', 'PBVR','F'],
-           ['EPSG', 'ROA'],
-           ['EPSG', 'DER', 'D'],
-           ['PCFR', 'EPSG', 'BU']
-           ]
+def get_keywords( screen_list ):
+    keyword_list = []
+    for screen in screen_list:
+        if screen != '':
+            keyword_list = keyword_list + keywords[ screen ]
+    return list( set( keyword_list ) )
 
 def make_finviz_url( screen ):
     prefix = 'http://finviz.com/screener.ashx?v=111&f='
@@ -571,34 +640,14 @@ def make_finviz_url( screen ):
     return url
 
 def make_minor_screen():
-    cap_screens = ['SC', 'MC', 'LC', 'MG' ]
-    sector_screens = ['BI','BM','CG','CS',
-                      'DMM','F','H','I',
-                      'IIP','IMM','IOG','MOG',
-                      'OGD','REIT','T',
-                      'U' ]
-    
-    minor_filters = ['BI','BM','CG','CS',
-                     'DMM','F','H','I','IIP','IOG','IMM','LC', #'ETF','D',
-                     'MOG','MC','MG','OGD','REIT','SC',
-                     'T','U','U5','U7','U10']
-    
     minor_screen = ['','','']
     while minor_screen == ['','','']:
         minor_screen = [ choice( cap_screens + ['','','']),
                          choice( sector_screens + ['','','',''] ),
-                         choice( ['D','D','D','DH','DH','DVH','','',''] ) ]
+                         choice( dividend_screens + ['','',''] ) ]
     return minor_screen
 
 def make_major_screen():
-    #trend_screens = ['52WH', '52WL'] # 'BE', 'BU', 'GC',   
-    low_value_screens = ['LFPE','PER','PEG','PBVR','PCFR','PSR']
-    liquidity_screens = ['CR','QR']
-    profit_screens = ['EPSG','NM','OPM','ROA','ROE']
-    growth_screens = ['EPSG1','EPSG5']
-    # price_screens = ['U5','U7','U10']
-    debt_screens = ['DER','LDER']
-    analyst_screens = ['AB','ABB','ASB','ASB']
     screens = [ #[choice( trend_screens )],
                 sample( low_value_screens, 2 ),
                 liquidity_screens,

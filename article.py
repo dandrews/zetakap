@@ -13,6 +13,8 @@ from tickerlist import TickerList
 from tickerlist import top_tickers
 from company import Company
 from descriptions import descriptions as descs
+from utils import find_between
+from utils import get_pretty_html
 
 trend_screens = set(['52WH', '52WL']) #'BE', 'BU', 
 type_screens = set(['D'])
@@ -158,6 +160,57 @@ class Article:
         intro.append( choice( intro_endings ) )
         intro = ' '.join( intro )
         self.intro = intro
+
+    def scrape_intros(self):
+        
+        base_url = 'http://seekingalpha.com/author/zetakap/articles'
+        begin = '<a class="dashboard_article_link" '
+        end = '</a>'
+        page = 0
+        article_candidates = {}
+
+        keywords = screens.get_keywords( self.screen )
+
+        while len( article_candidates ) < 3:
+            page = page + 1
+            if page > 5:
+                break
+            url = base_url + '/' + str( page )
+            print url
+            pretty_html = get_pretty_html( url )
+            while find_between( pretty_html, begin, end ):
+                counter = 0
+                author_content = find_between( pretty_html, begin, end )
+                content_array = author_content.split('>')
+                title = content_array[1].strip()
+                for keyword in keywords:
+                    if keyword in title:
+                        counter = counter + 1
+                if counter >= 3:
+                    link = content_array[0].strip()
+                    article_link = 'http://seekingalpha.com' + link.replace('href="','').replace('"','')
+                    print title
+                    article_candidates[title] = article_link
+                    if len( article_candidates ) == 3:
+                        break
+                pretty_html = pretty_html.replace( begin, '', 1 )
+
+        scraped_intros = []
+        for title, link in article_candidates.items():
+            print title
+            article_html = get_pretty_html( link )
+            begin = '<div id="article_body" itemprop="articleBody">'
+            end = '</p>'
+            article_content = find_between( article_html, begin, end )
+            scraped_intros.append( article_content.strip() + '</p>' )
+            
+        self.scraped_intros = scraped_intros
+
+    def print_scraped_intros(self):
+        intros = ''
+        for intro in self.scraped_intros:
+            intros = intros + "\n" + intro + "\n"
+        return intros
     
     def make_descs(self):
         self.descs = []        
@@ -322,11 +375,14 @@ class Article:
                                    "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Google Finance and Yahoo Finance.\n"])
 
     def make_article(self):
+        self.make_profiles()
+        if self.num_companies < 3:
+            return False
         self.make_intro()
+        self.scrape_intros()        
         self.make_descs()
         self.make_summary(self.screen)
         self.make_conclusion()
-        self.make_profiles()
         self.make_disclaimer()
         # make title last so that num_companies is updated
         self.make_title()
@@ -335,6 +391,7 @@ class Article:
         article_text = ''
         article_text = self.title + "\n\n"
         article_text = article_text + "<p>" + self.intro + "</p>\n"
+        article_text = article_text + self.print_scraped_intros() + "\n"        
         article_text = article_text + self.print_descs() + "\n"       
         article_text = article_text + "<p>" + self.summary + "</p>\n"
         article_text = article_text + "<div>" + self.conclusion + "</div>\n"
