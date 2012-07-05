@@ -32,7 +32,7 @@ major_screens = sum( [ trend_screens,
                        profit_screens,
                        growth_screens,
                        price_screens,
-                       debt_screens,
+                       #debt_screens,
                        analyst_screens ], [] )
 
 keywords = {'AB': ['Analysts','Buy'],
@@ -46,6 +46,7 @@ keywords = {'AB': ['Analysts','Buy'],
             'CR': ['Cash','Money','Liquid'],
             'CS': ['Computer'],            
             'D': ['Dividend','Yield'],
+            'DER': ['Debt'],
             'DH': ['Dividend','High Yield'],
             'DMM': ['Pharma'],
             'DVH': ['Dividend','High Yield'],
@@ -61,6 +62,7 @@ keywords = {'AB': ['Analysts','Buy'],
             'IMM': ['Industrial Metals & Minerals'],
             'IOG': ['Oil & Gas'],
             'LC': ['Large'],
+            'LDER': ['Debt','Long'],            
             'LFPE': ['Discount','Low Value'],
             'MC': ['Mid'],
             'MG': ['Mega'],            
@@ -653,7 +655,7 @@ def make_major_screen():
                 liquidity_screens,
                 sample( profit_screens, 2 ),
                 [choice( growth_screens )],
-                #[choice( debt_screens )],                
+                #debt_screens,                
                 [choice( analyst_screens )] ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])
