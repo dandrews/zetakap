@@ -1,7 +1,7 @@
 # m h  dom mon dow   command
 # ZetaKap
 # clean out old articles once per day
-0 0 * * *              /bin/bash -l rm $HOME/Dropbox/Articles/* >> $HOME/zetakap/log/dropbox.log
+0 0 * * *              rm -v $HOME/Dropbox/Articles/* >> $HOME/zetakap/log/dropbox.log
 # create new articles every 6 hours
 10 0,6,12,18 * * *     $HOME/zetakap/zetakap.py >> $HOME/zetakap/log/zetakap.log
 # run social update every hour
