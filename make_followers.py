@@ -16,7 +16,9 @@ followers = ['ZetaKap',
              'SeekingAlpha',
              'biztradenews',
              'WallStJesus',
-             'AlenKarabegovic']
+             'AlenKarabegovic',
+             'tonymmeyer']
+
 for friend in friends:
     followers.append( friend.screen_name )
 
