@@ -2,6 +2,7 @@
 import bitly
 import posterous
 import blogspot
+import credentials
 import xml.etree.ElementTree as ET
 import urllib2
 
@@ -80,5 +81,33 @@ for item in sa_root.findall('channel/item'):
     else:
         break
 
+# only send an email when there are new tweets    
+if len( tweets ) == 0:
+    exit
+
+FROM = 'daniel.raymond.andrews@gmail.com'
+TO = ['daniel.raymond.andrews+zetakap@gmail.com',
+      'zetakap.media@gmail.com']
+    
+SUBJECT = "Seeking Alpha - Make Social Update"
+
+TEXT = "\n"
 for tweet in tweets:
     print tweet
+    TEXT = TEXT + tweet + "\n\n"
+
+# Prepare actual message
+message = """\
+From: %s
+To: %s
+Subject: %s
+
+%s
+""" % (FROM, ", ".join(TO), SUBJECT, TEXT)
+
+# Send the mail
+server = smtplib.SMTP('smtp.gmail.com:587')  
+server.starttls()  
+server.login( credentials.USERNAME, credentials.PASSWORD )  
+server.sendmail(FROM, TO, message)  
+server.quit()

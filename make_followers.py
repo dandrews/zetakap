@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-
 import twitter_post
-import update_email
+import credentials
 import smtplib
 import xml.etree.ElementTree as ET
 import urllib2
@@ -41,15 +40,32 @@ for follow in current_followers:
         twitter_post.client.CreateFriendship(screen_name)
         following.append( screen_name )
 
-msg = "New following:\n"
+# only send an email when there are new followed        
+if len( following ) == 0:
+    exit()
+
+FROM = 'daniel.raymond.andrews@gmail.com'
+TO = ['daniel.raymond.andrews+zetakap@gmail.com',
+      'zetakap.media@gmail.com']
+
+SUBJECT = "@ZetaKap twitter - newly following"
+
+TEXT = "\n"
 for name in following:
-    msg = msg + name + "\n"
-    
-# Send an update email
+    TEXT = TEXT + name + "\n"
+
+# Prepare actual message
+message = """\
+From: %s
+To: %s
+Subject: %s
+
+%s
+""" % (FROM, ", ".join(TO), SUBJECT, TEXT)
+
+# Send the mail
 server = smtplib.SMTP('smtp.gmail.com:587')  
 server.starttls()  
-server.login( update_email.USERNAME, update_email.PASSWORD )  
-server.sendmail(update_email.fromaddr, update_email.toaddrs, msg)  
+server.login( credentials.USERNAME, credentials.PASSWORD )  
+server.sendmail(FROM, TO, message)  
 server.quit()
-
-        
