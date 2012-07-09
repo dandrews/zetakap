@@ -1,0 +1,6 @@
+# m h  dom mon dow   command
+#0 6 * * *         /root/zetakap/zetakap.py >> /root/zetakap/log/zetakap.log
+5 * * * *              /root/zetakap/social_update.py >> /root/zetakap/log/social_update.log
+0 0,4,8,12,16,20 * * * /root/zetakap/make_followers.py >> /root/zetakap/log/make_followers.log
+
+
