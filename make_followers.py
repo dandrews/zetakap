@@ -4,6 +4,7 @@ import credentials
 import smtplib
 import xml.etree.ElementTree as ET
 import urllib2
+import sys
 
 sa_url = 'http://seekingalpha.com/author/zetakap.xml'
 sa_xml = urllib2.urlopen( sa_url ).read()
@@ -42,7 +43,7 @@ for follow in current_followers:
 
 # only send an email when there are new followed        
 if len( following ) == 0:
-    exit()
+    sys.exit()
 
 FROM = 'daniel.raymond.andrews@gmail.com'
 TO = ['daniel.raymond.andrews+zetakap@gmail.com',

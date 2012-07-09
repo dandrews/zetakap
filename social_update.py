@@ -6,6 +6,7 @@ import smtplib
 import credentials
 import xml.etree.ElementTree as ET
 import urllib2
+import sys
 
 def make_tweet(title,url,tickers):
 
@@ -84,7 +85,7 @@ for item in sa_root.findall('channel/item'):
 
 # only send an email when there are new tweets    
 if len( tweets ) == 0:
-    exit
+    sys.exit()
 
 FROM = 'daniel.raymond.andrews@gmail.com'
 TO = ['daniel.raymond.andrews+zetakap@gmail.com',
