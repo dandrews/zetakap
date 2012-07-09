@@ -2,12 +2,15 @@
 
 from screens import make_screen
 from article import Article
-import glob
+import glob,os,sys
 
-num_articles = len(glob.glob("Articles/Article_*.txt"))
+pwd = os.path.dirname(__file__)
+article_path = pwd + "/Articles"
+
+num_articles = len(glob.glob( article_path + "/Article_*.txt"))
 articles = []
 
-while len( articles ) < 10:
+while len( articles ) < 1:
     
     article = Article( make_screen() )
     
@@ -18,7 +21,7 @@ while len( articles ) < 10:
     if article.make_article() != False:
         articles.append( article )
         num_articles = num_articles + 1
-        article_file = open('Articles/Article_' + str(num_articles) + '.txt','w')
+        article_file = open( article_path + '/Article_' + str(num_articles) + '.txt', 'w' )
         article_file.write( str( article.print_article() ) )
         article_file.close()
     
