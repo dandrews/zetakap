@@ -10,7 +10,7 @@ article_path = pwd + "/Articles"
 num_articles = len(glob.glob( article_path + "/Article_*.txt"))
 articles = []
 
-while len( articles ) < 1:
+while len( articles ) < 10:
     
     article = Article( make_screen() )
     
