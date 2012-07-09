@@ -2,6 +2,7 @@
 import bitly
 import posterous
 import blogspot
+import smtplib
 import credentials
 import xml.etree.ElementTree as ET
 import urllib2
