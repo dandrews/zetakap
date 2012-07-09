@@ -1,6 +1,12 @@
 # m h  dom mon dow   command
-#0 6 * * *         /root/zetakap/zetakap.py >> /root/zetakap/log/zetakap.log
-5 * * * *              /root/zetakap/social_update.py >> /root/zetakap/log/social_update.log
-0 0,4,8,12,16,20 * * * /root/zetakap/make_followers.py >> /root/zetakap/log/make_followers.log
-
+# ZetaKap
+# clean out old articles once per day
+0 0 * * *              /bin/bash -l rm $HOME/Dropbox/Articles/* >> $HOME/zetakap/log/dropbox.log
+# create new articles every 6 hours
+10 0,6,12,18 * * *     $HOME/zetakap/zetakap.py >> $HOME/zetakap/log/zetakap.log
+# run social update every hour
+5 * * * *              $HOME/zetakap/social_update.py >> $HOME/zetakap/log/social_update.log
+# run twitter follow script every 4 hours
+0 4,8,12,16,20 * * *   $HOME/zetakap/make_followers.py >> $HOME/zetakap/log/make_followers.log
+ 
 
