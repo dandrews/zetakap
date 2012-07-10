@@ -105,6 +105,9 @@ To: %s
 Subject: %s
 
 %s
+
+http://seekingalpha.com/author/zetakap/stocktalk
+
 """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
 
 # Send the mail
