@@ -211,7 +211,7 @@ class Article:
     def print_scraped_titles(self):
         titles = ''
         for title in self.scraped_titles:
-            titles = titles + "\n" + title + "\n"
+            titles = titles + "\n<p>" + title + "\n</p>"
         return titles
         
     def print_scraped_intros(self):
