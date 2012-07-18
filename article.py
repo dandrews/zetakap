@@ -10,7 +10,6 @@ from screens import intro_endings
 from screens import summaries
 from screens import titles
 from tickerlist import TickerList
-from tickerlist import top_tickers
 from company import Company
 from descriptions import descriptions as descs
 from utils import find_between
@@ -195,17 +194,26 @@ class Article:
                         break
                 pretty_html = pretty_html.replace( begin, '', 1 )
 
+        scraped_titles = []
         scraped_intros = []
         for title, link in article_candidates.items():
             print title
+            scraped_titles.append( title )
             article_html = get_pretty_html( link )
             begin = '<div id="article_body" itemprop="articleBody">'
             end = '</p>'
             article_content = find_between( article_html, begin, end )
             scraped_intros.append( article_content.strip() + '</p>' )
             
+        self.scraped_titles = scraped_titles            
         self.scraped_intros = scraped_intros
 
+    def print_scraped_titles(self):
+        titles = ''
+        for title in self.scraped_titles:
+            titles = titles + "\n" + title + "\n"
+        return titles
+        
     def print_scraped_intros(self):
         intros = ''
         for intro in self.scraped_intros:
@@ -390,6 +398,7 @@ class Article:
     def print_article(self):
         article_text = ''
         article_text = self.title + "\n\n"
+        article_text = article_text + self.print_scraped_titles() + "\n\n"        
         article_text = article_text + "<p>" + self.intro + "</p>\n"
         article_text = article_text + self.print_scraped_intros() + "\n"        
         article_text = article_text + self.print_descs() + "\n"       
