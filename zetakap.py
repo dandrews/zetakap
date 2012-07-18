@@ -2,7 +2,7 @@
 
 from screens import make_screen
 from article import Article
-import glob,os,sys
+import glob,os
 
 pwd = os.path.dirname(__file__)
 article_path = pwd + "/Articles"
@@ -20,6 +20,7 @@ while len( articles ) < 10:
 
     if article.make_article() != False:
         articles.append( article )
+        article.tickerlist.update_pending_tickers()
         num_articles = num_articles + 1
         article_file = open( article_path + '/Article_' + str(num_articles) + '.txt', 'w' )
         article_file.write( str( article.print_article() ) )
