@@ -211,6 +211,7 @@ class Article:
     def print_scraped_titles(self):
         titles = ''
         for title in self.scraped_titles:
+            title = str(self.num_companies) + title[1:]
             titles = titles + "\n<p>" + title + "\n</p>"
         return titles
         
@@ -397,10 +398,15 @@ class Article:
         
     def print_article(self):
         article_text = ''
+        article_text = article_text + "<p>" + "--------- The title below is a computer generated template title ----------------------------" + "</p>\n"        
         article_text = self.title + "\n\n"
-        article_text = article_text + self.print_scraped_titles() + "\n\n"        
+        article_text = article_text + "<p>" + "--------- The following titles are from past published articles -----------------------------" + "</p>\n"        
+        article_text = article_text + self.print_scraped_titles() + "\n\n"
+        article_text = article_text + "<p>" + "--------- The following intro is computer generated and should probably just be deleted -----" + "</p>\n"        
         article_text = article_text + "<p>" + self.intro + "</p>\n"
-        article_text = article_text + self.print_scraped_intros() + "\n"        
+        article_text = article_text + "<p>" + "--------- The following paragraphs are intros from past published articles ------------------" + "</p>\n"
+        article_text = article_text + self.print_scraped_intros() + "\n"
+        article_text = article_text + "<p>" + "--------- You shouldn't have to edit anything below this line -------------------------------" + "</p>\n"
         article_text = article_text + self.print_descs() + "\n"       
         article_text = article_text + "<p>" + self.summary + "</p>\n"
         article_text = article_text + "<div>" + self.conclusion + "</div>\n"
