@@ -376,12 +376,7 @@ class Article:
         return profiles
         
     def make_disclaimer(self):    
-        self.disclaimer = choice( ["\n\n*Company profiles were sourced from Finviz.\n",
-                                   "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Yahoo Finance.\n",
-                                   "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Finviz.\n",
-                                   "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Finviz and Yahoo Finance.\n",
-                                   "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Finviz and Google Finance.\n",                                   
-                                   "\n\n*Company profiles were sourced from Finviz. Financial data was sourced from Google Finance and Yahoo Finance.\n"])
+        self.disclaimer = "\n\n*Company profiles were sourced from Google Finance and Yahoo Finance. Financial data was sourced from Finviz.\n"
 
     def make_article(self):
         self.make_profiles()
