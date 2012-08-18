@@ -29,24 +29,23 @@ def is_old_enough( pub_date ):
         return False
 
 def get_ticker_article_age( sym ):
-    
-    sym_url = 'http://seekingalpha.com/author/zetakap/articles/symbol/' + sym.lower()
 
+    sym_url = 'http://seekingalpha.com/symbol/' + sym.lower()
+    
     html = get_pretty_html( sym_url )
 
-    begin = '<div class="author_content">'
-    end = '</div>'
+    begin = '<a href="/author/zetakap">'
+    end = '</li>'
     author_content = find_between( html, begin, end )
-    no_articles = 'This author currently does not have any '
 
     if author_content == '':
-        raise Exception("TICKER NOT FOUND!")
-    elif 0 <= author_content.find( no_articles ):
         return gmtime(0)
     else:
-        begin = '<div class="date">'
-        end = '<span class="bullet">'
+        begin = '</span>'
+        end = '<span class="bullet">'              
         date = find_between( author_content, begin, end )
+
+        date = date.strip()
 
         c = pdc.Constants()
         p = pdt.Calendar(c)
