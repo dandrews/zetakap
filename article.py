@@ -15,12 +15,22 @@ from descriptions import descriptions as descs
 from utils import find_between
 from utils import get_pretty_html
 
+# BM - Basic Materials
+# CO - Conglomerates
+# CG - Consumer Goods
+# F  - Financial
+# H  - healthcare
+# IG - Industrial Goods
+# S  - Services
+# T  - Technology
+# U  - Utilities
+
 trend_screens = set(['52WH', '52WL']) #'BE', 'BU', 
 type_screens = set(['D'])
 cap_screens = set(['SC', 'MC', 'LC', 'MG' ])
 liquidity_screens = set(['CR','QR'])
 yield_screens = set(['DH','DVH'])
-sector_screens = set(['BI','BM','CG','CS','DMM','F',
+sector_screens = set(['BI','BM','CG','CO','CS','DMM','F',
                       'H','I','IIP','IMM',
                       'IOG','MOG','OGD','REIT',
                       'T','U']) 

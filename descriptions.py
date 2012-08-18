@@ -14,6 +14,7 @@ descriptions = {'AB': "",
                     "The Current ratio is a liquidity ratio used to determine a company's financial health. The metric illustrates how easily a firm can pay back its short obligations all at once through current assets. A company that has a current ratio of one or less is generally a liquidity red flag. Now this doesn't mean the company will go bankrupt tomorrow, but it also doesn't bode well for the company, and may indicate that it could have an issue paying back upcoming obligations.\n",
                 'QR':
                     "The Quick ratio measures a company's ability to use its cash or assets to extinguish its current liabilities immediately. Quick assets include assets that presumably can be converted to cash at close to their book values. A company with a Quick Ratio of less than 1 cannot currently pay back its current liabilities. The quick ratio is more conservative than the Current Ratio because it excludes inventory from current assets, since some companies have difficulty turning their inventory into cash. If short-term obligations need to be paid off immediately, sometimes the current ratio would overestimate a company's short-term financial strength. In general, the higher the ratio, the greater the company's liquidity (i.e., the better able to meet current obligations using liquid assets).\n",
+                'CO': "",
                 'CS': "",                
                 'D': "",
                 'DH': "",

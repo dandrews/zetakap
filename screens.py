@@ -6,7 +6,7 @@ from random import sample
 # minor screens
 dividend_screens = ['D','D','D','DH','DH','DVH']
 cap_screens = ['SC', 'MC', 'LC', 'MG' ]
-sector_screens = ['BI','BM','CG','CS',
+sector_screens = ['BI','BM','CG','CO','CS',
                   'DMM','F','H','I',
                   'IIP','IMM','IOG','MOG',
                   'OGD','REIT','T',
@@ -44,6 +44,7 @@ keywords = {'AB': ['Analysts','Buy'],
             'BU': ['Gain', 'Bullish'],
             'CG': ['Consumer Goods'],
             'CR': ['Cash','Money','Liquid'],
+            'CO': ['Conglomerate'],            
             'CS': ['Computer'],            
             'D': ['Dividend','Yield'],
             'DER': ['Debt'],
@@ -451,6 +452,7 @@ abbrevs = {'AB':   "Analysts' Rating",
            'CG':   'Consumer',           
            'CR':   'Current Ratio',
            'QR':   'Quick Ratio',
+           'CO':   'Conglomerate',           
            'CS':   'Computer Systems',
            'D':    'Dividend',
            'DH':   'High Yield Dividend',
@@ -502,6 +504,7 @@ maps = {'AB':   'an_recom_buy',
         'CG':   'sec_consumergoods',
         'CR':   'fa_curratio_o2',
         'QR':   'fa_quickratio_o2',
+        'CO':   'sec_conglomerates',
         'CS':   'ind_diversifiedcomputersystems',
         'D':    'fa_div_o3,fa_payoutratio_u100',
         'DH':   'fa_div_high,fa_payoutratio_u100',
@@ -616,7 +619,7 @@ order_suffixes = {'AB': '-recom',
                   'ROE': '-roe'
                   }
 
-ignored = ['BI','BE','BM','BU','CG','CS',
+ignored = ['BI','BE','BM','BU','CG','CO','CS',
            'DMM','F','H','I','IIP','IOG','IMM','LC','MOG','MC','MG',  #'ETF',
            'OGD','REIT','SC','T','U'] # ,'U5','U7','U10']
 
@@ -663,7 +666,18 @@ def make_major_screen():
     if len( screens ) == 3:
         screens = screens + ['']
     return screens
-    
+
+# returns array of the form:
+# ['market cap',
+#  'sector',
+#  'dividend',
+#  'major screen 1',
+#  'major screen 2',
+#  'major screen 3',
+#  'option major screen 4']
+# Sample: ['LC','F','D','CR','QR','NM','OPM','']
+#   minor screens: 'Large Cap', 'Financial', 'Dividend'
+#   major screens: 'Current Ratio', 'Quick Ratio', 'Net Margin', 'Operating Profit Margin', n/a
 def make_screen():
     return make_minor_screen() + make_major_screen()
 
