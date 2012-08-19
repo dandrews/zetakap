@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import re, datetime
+import re
 import utils
 from screens import abbrevs
 from screens import ignored
@@ -13,7 +13,7 @@ class Company:
         self.ticker = ticker
         self.screen = screen
         self.screen_pairs = []
-        self.screen_desc = ''
+        self.screen_table = ''
         profile_url = "http://finviz.com/quote.ashx?t=" + ticker
         self.html = get_pretty_html( profile_url )
 
@@ -95,35 +95,24 @@ class Company:
         if 'PO' in self.screen:
             self.screen.remove('PO')
 
-    def set_screen_desc(self):
-        if self.name != '':
-            screen_desc = "\n" + self.name + " has a "
-        else:
-            screen_desc = "\n" + "This company" + " has a "
-        desc = []
+    def set_chart_html(self):
+        self.chart_html = '<p><img src="http://finviz.com/chart.ashx?t=' + self.ticker + '&amp;ty=c&amp;ta=1&amp;p=d&amp;s=l" alt="' + self.ticker + ' stock chart" /></p>'
+
+    def set_screen_table(self):
+        screen_table = '<p><strong>Financials</strong></p>'
+        screen_table = screen_table + '<table border="1" cellpadding="1" cellspacing="1" class="designed_table"><tbody>'
         for screen_pair in self.screen_pairs:
             name = screen_pair[0]
             value = str(screen_pair[1])            
             if name in set(['Dividend', 'High Yield Dividend', 'Very High Yield Dividend']):
                 name = 'Dividend Yield'
             if name == 'Payout Ratio':
-                if value == '-':
+                if value == '-' or value == '0.00%':
                     continue
-                if value == '0.00%':
-                    continue
-            if name == '52 Week High':
-                desc.append( "trading below it's " + name + " by " + value )                
-                continue
-            elif name == '52 Week Low':
-                desc.append( "trading above it's " + name + " by " + value )
-                continue
-            else:
-                desc.append( name + " of " + value )
-        screen_desc = screen_desc + ", a ".join( desc ) + "."
-        pos = screen_desc.rfind( ", a " )
-        screen_desc = screen_desc[:pos] + screen_desc[pos:].replace( ', a ', ', and a ', 1 )
-        self.screen_desc = screen_desc
-
+            screen_table = screen_table + '<tr><td>' + name + '</td><td>' + value + '</td></tr>'
+        screen_table = screen_table + '<tr><td>' + "Short Interest" + '</td><td>' + self.short_interest  + '</td></tr>'
+        self.screen_table = screen_table + '</tbody></table>'
+        
     def set_beta(self):
         begin = 'body=[Beta]'
         end = '</b>'
@@ -135,14 +124,12 @@ class Company:
         self.beta = re.sub(r'<[^>]*?>', '', beta).strip()
 
     def get_profile(self):
-        date = datetime.datetime.now()
-
         self.profile = "\n".join(
             [ "<b>" + self.name + " (" + self.ticker + ")" + "</b>",
-              "<table>",
+              '<table border="1" cellpadding="1" cellspacing="1" class="designed_table">',
                   "<tr>",
                       "<td>",
-                      "Sector: ",
+                      "Sector",
                       "</td>",
                       "<td>",
                       self.sector,
@@ -150,7 +137,7 @@ class Company:
                   "</tr>",
                   "<tr>",
                       "<td>",              
-                      "Industry: ",
+                      "Industry",
                       "</td>",
                       "<td>",              
                       self.industry,
@@ -158,7 +145,7 @@ class Company:
                   "</tr>",
                   "<tr>",
                       "<td>",              
-                      "Market Cap: ",
+                      "Market Cap",
                       "</td>",
                        "<td>",              
                       "$" + self.cap,
@@ -166,7 +153,7 @@ class Company:
                   "</tr>",
                   "<tr>",
                       "<td>",              
-                      "Beta: ",
+                      "Beta",
                       "</td>",
                        "<td>",              
                       self.beta,
@@ -174,8 +161,8 @@ class Company:
                   "</tr>",
               "</table>",
               "<p>",
-              self.screen_desc,
-              "The short interest was " + self.short_interest + " as of " + date.strftime("%m/%d/%Y") + ".",
+              self.chart_html,              
+              self.screen_table,
               self.desc,
               "</p>"]
             )
@@ -188,8 +175,9 @@ class Company:
         self.set_cap()
         self.set_beta()
         self.set_screen_pairs()
-        self.set_screen_desc()
         self.set_short()
+        self.set_chart_html()
+        self.set_screen_table()
         # fill in profile
         self.get_profile()
         

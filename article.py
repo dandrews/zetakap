@@ -3,7 +3,7 @@
 from random import choice
 from random import shuffle
 import screens
-import re
+import re, datetime
 from screens import abbrevs
 from screens import intros
 from screens import intro_endings
@@ -385,8 +385,9 @@ class Article:
             list_order = list_order + 1
         return profiles
         
-    def make_disclaimer(self):    
-        self.disclaimer = "\n\n*Company profiles were sourced from Google Finance and Yahoo Finance. Financial data was sourced from Finviz.\n"
+    def make_disclaimer(self):
+        date = datetime.datetime.now()
+        self.disclaimer = "\n\n*Company profiles were sourced from Google Finance and Yahoo Finance. Financial data was sourced from Finviz" + " on " + date.strftime("%m/%d/%Y") + ".\n"
 
     def make_article(self):
         self.make_profiles()
