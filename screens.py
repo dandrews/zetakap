@@ -2,6 +2,7 @@
 # coding: utf-8
 from random import choice
 from random import sample
+from random import randint
 
 # minor screens
 dividend_screens = ['D','D','D','DH','DH','DVH']
@@ -32,7 +33,7 @@ major_screens = sum( [ trend_screens,
                        profit_screens,
                        growth_screens,
                        price_screens,
-                       #debt_screens,
+                       debt_screens,
                        analyst_screens ], [] )
 
 keywords = {'AB': ['Analysts','Buy'],
@@ -47,7 +48,7 @@ keywords = {'AB': ['Analysts','Buy'],
             'CO': ['Conglomerate'],            
             'CS': ['Computer'],            
             'D': ['Dividend','Yield'],
-            'DER': ['Debt'],
+            'DER': ['Debt','Low'],
             'DH': ['Dividend','High Yield'],
             'DMM': ['Pharma'],
             'DVH': ['Dividend','High Yield'],
@@ -63,7 +64,7 @@ keywords = {'AB': ['Analysts','Buy'],
             'IMM': ['Industrial Metals & Minerals'],
             'IOG': ['Oil & Gas'],
             'LC': ['Large'],
-            'LDER': ['Debt','Long'],            
+            'LDER': ['Debt','Low'],            
             'LFPE': ['Discount','Low Value'],
             'MC': ['Mid'],
             'MG': ['Mega'],            
@@ -278,6 +279,11 @@ intros = {'AB': ["Do you prefer investing in stocks that analysts have weighed i
                "Do you prefer companies with high liquidity?",
                "Interested in companies with high liquidity?",                   
                "Company liquidity is an important consideration in any stock analysis. Liquidity gives a company the ability to make big acquisitions if it sees investment opportunities, a cushion for future lulls in demand, and most importantly, it keeps a company’s doors open. Are these the types of stocks that you're looking for?"],
+          'debt':
+              ["Interested in companies with minimal debt?",
+               "Do you look for companies with low debt?",
+               "Do you value companies that can keep their debt down?",
+               "In search of companies that can manage their debt well?"],
           'DER':
               ["Interested in companies with minimal debt?",
                "Do you look for companies with low debt?",
@@ -395,8 +401,8 @@ summaries = {'AB': ['that analysts rate as "Buy" (2 < mean recommendation < 3)']
                     'with a very high yield (more than 5%)'],
              'DVH': ['that have a very high dividend yield (Div. Yield > 10%)',
                      'with a very high yield (more than 10%)'],             
-             'DER': ['that operate with little to no debt (D/E Ratio<.3)',
-                     'that have maintained a sound capital structure (D/E Ratio<.3)'],
+             'DER': ['that operate with little to no debt (D/E Ratio<.1)',
+                     'that have maintained a sound capital structure (D/E Ratio<.1)'],
              'LDER': ['that operate with little to no long term debt (Long Term D/E Ratio<.1)',
                       'that have maintained a sound long term capital structure (Long Term D/E Ratio<.1)'],             
              'EPSG': ['that have shown strong bottom line growth over the last year (1-year fiscal EPS growth rate>10%)',
@@ -512,7 +518,7 @@ maps = {'AB':   'an_recom_buy',
         'DMM':  'ind_drugmanufacturersmajor',
         '52WH': 'ta_highlow52w_b80',
         '52WL': 'ta_highlow52w_a0to10h',        
-        'DER':  'fa_debteq_u0.3',
+        'DER':  'fa_debteq_low',
         'LDER': 'fa_ltdebteq_low',
         'EPSG': 'fa_epsyoy_o10',
         'EPSG1':'fa_epsyoy1_high',
@@ -658,7 +664,7 @@ def make_major_screen():
                 liquidity_screens,
                 sample( profit_screens, 2 ),
                 [choice( growth_screens )],
-                #debt_screens,                
+                sample( debt_screens, randint(1,2) ),                
                 [choice( analyst_screens )] ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])

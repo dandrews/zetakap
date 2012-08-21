@@ -35,7 +35,7 @@ sector_screens = set(['BI','BM','CG','CO','CS','DMM','F',
                       'IOG','MOG','OGD','REIT',
                       'T','U']) 
 low_value_screens = set(['LFPE','PER','PEG','PBVR','PCFR','PSR'])
-debt_screens = set(['DER'])
+debt_screens = set(['DER','LDER'])
 profit_screens = set(['EPSG','NM','OPM','ROA','ROE'])
 
 def make_profit_title():
@@ -82,6 +82,7 @@ class Article:
         profit = 0        
         low_value = 0
         liquid = 0
+        debt = 0        
         qualifier = 0
         for major_screen in screen[3:]:
             if major_screen == '':
@@ -107,6 +108,13 @@ class Article:
                     addition = choice( titles[ major_screen ] )
                 else:
                     continue
+            elif major_screen in list(debt_screens):
+                if debt == 0:
+                    debt = 1
+                    qualifier = qualifier + 1
+                    addition = choice( titles[ major_screen ] )
+                else:
+                    continue
             else:
                 qualifier = qualifier + 1                
                 addition = choice( titles[ major_screen ] )
@@ -126,6 +134,7 @@ class Article:
         low_value = 0
         profit = 0
         liquidity = 0
+        debt = 0        
         trend = 0
         for screen in self.screen:
             if screen == '':
@@ -159,6 +168,12 @@ class Article:
                 if liquidity == 0:
                     key = 'liquidity'
                     liquidity = 1                    
+                else:
+                    continue
+            if screen in debt_screens:
+                if debt == 0:
+                    key = 'debt'
+                    debt = 1                    
                 else:
                     continue
             start = choice( intros[ key ] )
