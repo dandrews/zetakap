@@ -99,7 +99,7 @@ class Company:
         self.chart_html = '<p><img src="http://finviz.com/chart.ashx?t=' + self.ticker + '&amp;ty=c&amp;ta=1&amp;p=d&amp;s=l" alt="' + self.ticker + ' stock chart" /></p>'
 
     def set_screen_table(self):
-        screen_table = '<p><strong>Financials</strong></p>'
+        screen_table = '<p><strong>Key Metrics</strong></p>'
         screen_table = screen_table + '<table border="1" cellpadding="1" cellspacing="1" class="designed_table"><tbody>'
         for screen_pair in self.screen_pairs:
             name = screen_pair[0]
