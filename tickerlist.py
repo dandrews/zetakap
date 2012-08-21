@@ -12,6 +12,7 @@ import os
 
 pwd = os.path.dirname(__file__)
 article_path = pwd + "/Articles"
+excluded_tickers = ['AAPL', 'TGS', 'BMA']
 
 class TickerList:
     def __init__(self, screen ):
@@ -28,6 +29,8 @@ class TickerList:
             ticker = find_between( pretty_html, '<a href="quote.ashx?t=', '&amp;' )
             pretty_html = pretty_html.replace('<a href="quote.ashx?t=','',1)
             if ticker in pending_tickers:
+                continue
+            if ticker in excluded_tickers:
                 continue
             print "testing ticker " + ticker
             # only take tickers older than 25 days
