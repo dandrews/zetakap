@@ -27,8 +27,7 @@ class Company:
         begin = '<td class="fullview-profile" align="left">'
         end = '</td>'
         desc = find_between( self.html, begin, end )
-        num_periods = self.name.count('.') + 3
-        self.desc = '.'.join( desc.strip().split('.')[0:num_periods] ) + '.'
+        self.desc = desc.strip()
         
     def set_sector(self):
         begin = '<a href="screener.ashx?v=111&amp;f=sec_'
