@@ -197,7 +197,7 @@ class Article:
 
         while len( article_candidates ) < 3:
             page = page + 1
-            if page > 5:
+            if page > 8:
                 break
             url = base_url + '/' + str( page )
             print url
@@ -207,13 +207,14 @@ class Article:
                 author_content = find_between( pretty_html, begin, end )
                 content_array = author_content.split('>')
                 title = content_array[1].strip()
-                for keyword in keywords:
-                    if keyword in title:
-                        counter = counter + 1
-                if counter >= 3:
+                for keyword_set in keywords:
+                    for keyword in keyword_set:
+                        if keyword in title:
+                            counter = counter + 1
+                            break
+                if counter >= len(keywords) - 1:
                     link = content_array[0].strip()
                     article_link = 'http://seekingalpha.com' + link.replace('href="','').replace('"','')
-                    print title
                     article_candidates[title] = article_link
                     if len( article_candidates ) == 3:
                         break
