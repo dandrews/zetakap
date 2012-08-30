@@ -12,7 +12,10 @@ import os
 
 pwd = os.path.dirname(__file__)
 article_path = pwd + "/Articles"
-excluded_tickers = ['AAPL','TGS','BMA','EFC','MTGE','CRED','PEET']
+excluded_tickers = ['AAPL','BMA','CRED','CSCO','CVX','DMF',
+                    'DSM','EFC','FCX','LEO','MCC','MTGE',
+                    'PEET','TGS']
+
 
 class TickerList:
     def __init__(self, screen ):
