@@ -226,7 +226,7 @@ class Article:
             print title
             scraped_titles.append( title )
             article_html = get_pretty_html( link )
-            begin = '<div id="article_body" itemprop="articleBody">'
+            begin = '<!--googleon: index-->'
             end = '</p>'
             article_content = find_between( article_html, begin, end )
             scraped_intros.append( article_content.strip() + '</p>' )
