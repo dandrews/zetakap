@@ -190,14 +190,14 @@ class Article:
         base_url = 'http://seekingalpha.com/author/zetakap/articles'
         begin = '<a class="dashboard_article_link" '
         end = '</a>'
-        page = 4
+        page = 3
         article_candidates = {}
 
         keywords = screens.get_keywords( self.screen )
 
         while len( article_candidates ) < 4:
             page = page + 1
-            if page > 17:
+            if page > 13:
                 break
             url = base_url + '/' + str( page )
             print url
