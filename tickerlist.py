@@ -12,7 +12,7 @@ import os
 
 pwd = os.path.dirname(__file__)
 article_path = pwd + "/Articles"
-excluded_tickers = ['AAPL','AUTH','BMA','CRED','CSCO','CVX','DMF',
+excluded_tickers = ['AAPL','AUTH','BMA','CRED','CSCO','CTEL','CVX','DMF',
                     'DSM','EFC','FB','FCX','LEO','MCC',
                     'MTGE','PEET','TGS']
 
