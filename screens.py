@@ -660,13 +660,12 @@ def make_minor_screen():
     return minor_screen
 
 def make_major_screen():
-    screens = [ #[choice( trend_screens )],
-                sample( low_value_screens, 2 ),
+    screens = [ sample( low_value_screens, 2 ),
                 liquidity_screens,
                 sample( profit_screens, 2 ),
                 [choice( growth_screens )],
-                sample( debt_screens, randint(1,2) ),                
-                [choice( analyst_screens )] ]
+                sample( debt_screens, randint(1,2) )
+                ]
     # flatten the list
     screens = sum( sample( screens, 2 ), [])
     # pad the list
