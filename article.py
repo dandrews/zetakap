@@ -390,6 +390,9 @@ class Article:
             if company.cap == '0':
                 num_companies_removed = num_companies_removed + 1
                 continue
+            if company.short_interest == '100%':
+                num_companies_removed = num_companies_removed + 1
+                continue
             self.profiles.append( company.profile )
         self.num_companies = self.num_companies - num_companies_removed
 

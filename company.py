@@ -71,7 +71,11 @@ class Company:
             self.short_interest = short_html
             return
         short = short_html.split('<b>')[1]
-        self.short_interest = re.sub(r'<[^>]*?>', '', short).strip()
+        short = re.sub(r'<[^>]*?>', '', short).strip()
+        if float(short.replace('%','')) > 12:
+            self.short_interest = '100%'
+            return
+        self.short_interest = short
 
     def set_screen_pairs(self):
         ind = 0
