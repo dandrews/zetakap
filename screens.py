@@ -6,7 +6,7 @@ from random import randint
 
 # minor screens
 dividend_screens = ['D','D','D','DH','DH','DVH']
-cap_screens = ['SC', 'MC', 'LC', 'MG' ]
+cap_screens = ['SC', 'MC', 'LC' ]
 sector_screens = ['BI','BM','CG','CO','CS',
                   'DMM','F','H','I',
                   'IIP','IMM','IOG','MOG',
@@ -641,13 +641,14 @@ def make_finviz_url( screen ):
     prefix = 'http://finviz.com/screener.ashx?v=111&f='
     suffix = '&ft=4'
     order_suffix = '&o='
-    # geo = ',geo_usa'
-    # idx = ',idx_sp500'
+    pos_earnings = ',fa_epsqoq_pos,fa_epsyoy_pos'
     screen_url = []
     for screen_type in screen:
         if screen_type != '':
             screen_url.append( maps[screen_type] )
-    url = prefix + ','.join(screen_url) + suffix + order_suffix + order_suffixes[screen[3]] # + idx + geo
+        if 'EPSG' in screen_type:
+            pos_earnings = ''
+    url = prefix + ','.join(screen_url) + pos_earnings + suffix + order_suffix + order_suffixes[screen[3]] # + idx + geo
     print url
     return url
 
