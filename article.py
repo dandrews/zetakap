@@ -194,10 +194,10 @@ class Article:
         article_candidates = {}
 
         keywords = screens.get_keywords( self.screen )
-
-        while len( article_candidates ) < 4:
+        max_candidates = 4
+        while len( article_candidates ) < max_candidates:
             page = page + 1
-            if page > 13:
+            if page > 15:
                 break
             url = base_url + '/' + str( page )
             print url
@@ -216,7 +216,7 @@ class Article:
                     link = content_array[0].strip()
                     article_link = 'http://seekingalpha.com' + link.replace('href="','').replace('"','')
                     article_candidates[title] = article_link
-                    if len( article_candidates ) == 3:
+                    if len( article_candidates ) >= max_candidates:
                         break
                 pretty_html = pretty_html.replace( begin, '', 1 )
 
@@ -413,7 +413,7 @@ class Article:
         if self.num_companies < 3:
             return False
         self.make_intro()
-        self.scrape_intros()        
+        self.scrape_intros()
         self.make_descs()
         self.make_summary(self.screen)
         self.make_conclusion()
