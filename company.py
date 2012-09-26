@@ -72,7 +72,8 @@ class Company:
             return
         short = short_html.split('<b>')[1]
         short = re.sub(r'<[^>]*?>', '', short).strip()
-        if float(short.replace('%','')) > 12:
+        temp_short = short.replace('%','')
+        if temp_short == '-' or float(temp_short) > 12:
             self.short_interest = '100%'
             return
         self.short_interest = short
